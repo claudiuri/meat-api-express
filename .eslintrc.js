@@ -21,9 +21,12 @@ module.exports = {
   ],
   rules: {
     "prettier/prettier": "error",
+    "no-console": "off",
+    "linebreak-style": 0,
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "no-await-in-loop": "off",
+    "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "import/extensions": [
       "error",

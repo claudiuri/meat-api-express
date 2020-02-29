@@ -1,7 +1,5 @@
-import express from 'express';
-
-const app = express();
+import app from 'app';
 
 app.listen(1001, () => {
-  console.log('Server on')
+  console.log('Server on');
 });
