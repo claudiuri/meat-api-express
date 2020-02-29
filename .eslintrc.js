@@ -26,6 +26,7 @@ module.exports = {
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "no-await-in-loop": "off",
+    "no-unused-vars": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "import/extensions": [
