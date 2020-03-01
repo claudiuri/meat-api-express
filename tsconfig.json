@@ -21,6 +21,8 @@
       "src/@types"
     ],
     "paths": {
+      "@middlewares/*": ["middlewares/*"],
+      "@controllers/*": ["controllers/*"],
       "@config/*": ["config/*"],
       "@services/*": ["services/*"],
       "@schemas/*": ["schemas/*"],

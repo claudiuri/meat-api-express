@@ -29,6 +29,9 @@ module.exports = {
     "no-unused-vars": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
+    "no-param-reassign": 0,
+    "radix": 0,
+    "consistent-return": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

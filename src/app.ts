@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 
 import * as Sentry from '@sentry/node';
 import { RewriteFrames } from '@sentry/integrations';
+import ErrorHandler from '@middlewares/ErrorHandler';
+import { usercontroller } from '@controllers/UserController';
 
 declare global {
   namespace NodeJS {
@@ -35,6 +37,7 @@ class App {
       ],
     });
 
+    this.express.use(ErrorHandler);
     this.express.use(express.json());
     this.express.use(cors());
     this.express.use(
@@ -57,11 +60,12 @@ class App {
     mongoose.connect('mongodb://localhost:27017/meat-api-express', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     });
   }
 
   private routes(): void {
-    this.express.get('/', (req, res) => res.send('Helo World'));
+    usercontroller.applyRoutes(this.express);
   }
 }
 

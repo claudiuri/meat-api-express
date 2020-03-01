@@ -1,12 +1,15 @@
-import { Schema, model, Document } from 'mongoose';
+/* eslint-disable object-curly-newline */
+import { Schema, model, Document, Model } from 'mongoose';
 
-export interface UserInterface extends Document {
+export interface User extends Document {
   name: string;
   email: string;
   password: string;
   cpf: string;
   gender: string;
 }
+
+export interface UserModel extends Model<User> {}
 
 const UserSchema = new Schema({
   name: {
@@ -41,4 +44,4 @@ const UserSchema = new Schema({
   },
 });
 
-export default model<UserInterface>('User', UserSchema);
+export const User = model<User, UserModel>('User', UserSchema);
