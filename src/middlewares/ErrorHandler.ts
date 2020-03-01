@@ -1,6 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable prettier/prettier */
-/* eslint-disable object-curly-newline */
 import { Request, Response, NextFunction } from 'express';
 
 class HttpException extends Error {
@@ -8,11 +5,9 @@ class HttpException extends Error {
 
   message: string;
 
-  errors:Object;
+  errors: any;
 
-  code: number
-
-  // toJson:any;
+  code: number;
 
   constructor(status: number, message: string) {
     super(message);
@@ -22,38 +17,39 @@ class HttpException extends Error {
 }
 
 export default function(
-  error: HttpException,
+  err: HttpException,
   request: Request,
   response: Response,
   next: NextFunction,
 ) {
-  switch (error.name) {
-    case 'MongoError':
-      if (error.code === 11000) {
-        error.status = 400;
+  let errosJson: object = {};
+
+  switch (err.name) {
+    case 'MongoError': {
+      if (err.code === 11000) {
+        err.status = 400;
       }
 
+      errosJson = { message: err.message };
       break;
-    case 'ValidationError':
-      // eslint-disable-next-line no-case-declarations
-      const messages:Array<string> = [];
+    }
 
-      // eslint-disable-next-line no-restricted-syntax
-      // eslint-disable-next-line guard-for-in
-      for (const name in error.errors) {
-        messages.push({ erroMessage: error.errors[name].message });
-      }
+    case 'ValidationError': {
+      const messages: Array<string> = [];
 
-      error.toJSON = () => ({
-        message: 'Validation error while processing your request',
-        errors: messages,
+      Object.keys(err.errors).forEach((key, index) => {
+        messages.push(err.errors[key].message);
       });
 
+      errosJson = {
+        message: 'Validation error while processing your request',
+        errors: messages,
+      };
       break;
-
+    }
     default:
       break;
   }
 
-  response.status(400).send(error);
+  response.status(400).send(errosJson);
 }
