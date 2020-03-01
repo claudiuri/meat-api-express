@@ -77,6 +77,17 @@ export abstract class BaseController<D extends Document> {
       .catch(next);
   }
 
+  delete = (req: Request, resp: Response, next: NextFunction) => {
+    this.CurrentModel.remove({ _id: req.params.id }).exec().then((cmdResult: any) => {
+      if (cmdResult.result.n) {
+        resp.send(204);
+      } else {
+        resp.status(404).json({ message: 'Documento não encontrado' });
+      }
+      return next();
+    }).catch(next);
+  }
+
   envelope(document: any): any {
     const resource = { _links: {}, ...document.toJSON() };
     resource._links.self = `${this.basePath}/${resource._id}`;

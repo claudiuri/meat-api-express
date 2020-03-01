@@ -1,5 +1,7 @@
+/* eslint-disable func-names */
 /* eslint-disable object-curly-newline */
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model, Document, Model, HookNextFunction } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 export interface User extends Document {
   name: string;
@@ -43,5 +45,30 @@ const UserSchema = new Schema({
     // },
   },
 });
+
+UserSchema.methods.matches = function(password: string): boolean {
+  return bcrypt.compareSync(password, this.password);
+};
+
+const hashPassword = (obj: User, next: HookNextFunction) => {
+  bcrypt
+    .hash(obj.password, 10)
+    .then(hash => {
+      obj.password = hash;
+      next();
+    })
+    .catch(next);
+};
+
+const saveMiddleware = function(this: any, next: HookNextFunction) {
+  const user: User = this;
+  if (!user.isModified('password')) {
+    next();
+  } else {
+    hashPassword(user, next);
+  }
+};
+
+UserSchema.pre('save', saveMiddleware);
 
 export const User = model<User, UserModel>('User', UserSchema);

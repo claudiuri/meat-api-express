@@ -7,7 +7,13 @@ class UserController extends BaseController<User> {
     super(User);
   }
 
-  applyRoutes(application: express.Application) {}
+  applyRoutes(application: express.Application) {
+    application.get(this.basePath, this.findAll);
+    application.get(`${this.basePath}/:id`, [this.validateId, this.findById]);
+    application.post(this.basePath, this.save);
+    application.put(`${this.basePath}/:id`, [this.validateId, this.replace]);
+    application.delete(`${this.basePath}/:id`, [this.validateId, this.delete]);
+  }
 }
 
 export const usercontroller = new UserController();

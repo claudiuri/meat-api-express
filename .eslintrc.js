@@ -31,7 +31,13 @@ module.exports = {
     "import/prefer-default-export": "off",
     "no-param-reassign": 0,
     "radix": 0,
+    "arrow-parens": "off",
     "consistent-return": "off",
+    "space-before-function-paren": ["error", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+  }],
     "import/extensions": [
       "error",
       "ignorePackages",

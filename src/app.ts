@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import * as Sentry from '@sentry/node';
 import { RewriteFrames } from '@sentry/integrations';
-import ErrorHandler from '@middlewares/ErrorHandler';
+import errorMiddleware from '@middlewares/ErrorHandler';
 import { usercontroller } from '@controllers/UserController';
 
 declare global {
@@ -25,6 +25,7 @@ class App {
     this.middlewares();
     this.database();
     this.routes();
+    this.erroHandler();
   }
 
   private middlewares(): void {
@@ -37,8 +38,8 @@ class App {
       ],
     });
 
-    this.express.use(ErrorHandler);
     this.express.use(express.json());
+
     this.express.use(cors());
     this.express.use(
       Sentry.Handlers.requestHandler() as express.RequestHandler,
@@ -66,6 +67,10 @@ class App {
 
   private routes(): void {
     usercontroller.applyRoutes(this.express);
+  }
+
+  private erroHandler(): void {
+    this.express.use(errorMiddleware);
   }
 }
 
