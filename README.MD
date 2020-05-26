@@ -2,7 +2,7 @@
   Meat-Api 🍕
 </h1>
 
-<p align="center">Uma API de restaurantes onde você pode muscar os restaurantes(cadastrados) mais pertos de você!</p>
+<p align="center">Uma API de restaurantes onde você pode busca os restaurantes(cadastrados) mais pertos de você!</p>
 
 ## ✋🏻 Pré-requisitos
 
