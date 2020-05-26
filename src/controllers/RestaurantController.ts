@@ -50,7 +50,7 @@ class RestaurantController extends BaseController<Restaurant> {
 		let page = _page && typeof _page == 'string' ? parseInt(_page) : 1;
 
 		const skip = (page - 1) * this.pageSize;
-
+	
 		if (lat && long) {
 			Restaurant
 				.countDocuments({}).exec()
@@ -88,12 +88,17 @@ class RestaurantController extends BaseController<Restaurant> {
 
 		const { filename } = req.file;
 
-		const { name, location, menu } = req.body;
+		const { name, coordinates, menu, labels } = req.body;
+		
 
 		Restaurant.create({
 			name, 
-			location,
+			location: {
+				type: 'Point',
+				coordinates: coordinates.split(',').map((coordinate:String)  => parseFloat(coordinate.trim()))
+			},
 			menu,
+			labels: labels.split(',').map((label:String)  => label.trim()),
 			thumbnail: filename,
 		})
 		.then(this.render(resp, next))

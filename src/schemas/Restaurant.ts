@@ -29,6 +29,7 @@ const restSchema = new Schema({
   thumbnail: {
     type: String
   },
+  labels: [String],
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`

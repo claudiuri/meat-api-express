@@ -9,7 +9,7 @@ import {
 export abstract class BaseController<D extends Document> {
 	basePath: string;
 
-	pageSize: number = 4
+	pageSize: number = 3
 
 	constructor(protected CurrentModel: Model<D>) {
 		this.basePath = `/${CurrentModel.collection.name}`;
