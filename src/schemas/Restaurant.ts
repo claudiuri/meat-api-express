@@ -26,6 +26,9 @@ const restSchema = new Schema({
     type: String,
     required: true,
   },
+  thumbnail: {
+    type: String
+  },
   location: {
     type: {
       type: String, // Don't do `{ location: { type: String } }`
@@ -43,5 +46,9 @@ const restSchema = new Schema({
 });
 
 restSchema.index({ location: '2dsphere' });
+
+restSchema.virtual('thumbnail_url').get(function(this: any){
+  return `http://localhost:3333/files/${this.thumbnail}`;
+});
 
 export const Restaurant = model<Restaurant>('Restaurant', restSchema);

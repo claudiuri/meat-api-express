@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
 
 import * as Sentry from '@sentry/node';
 import { RewriteFrames } from '@sentry/integrations';
-import errorMiddleware from '@middlewares/ErrorHandler';
-import { usercontroller } from '@controllers/UserController';
-import { restaurantController } from '@controllers/RestaurantController';
+import errorMiddleware from './middlewares/ErrorHandler';
+import { usercontroller } from './controllers/UserController';
+import { restaurantController } from './controllers/RestaurantController';
 
 declare global {
   namespace NodeJS {
@@ -38,7 +39,7 @@ class App {
     //     }),
     //   ],
     // });
-
+    this.express.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')))
     this.express.use(express.json());
 
     this.express.use(cors());

@@ -1,6 +1,6 @@
-import { User } from '@schemas/User';
+import { User } from '../schemas/User';
 import express from 'express';
-import { BaseController } from '@controllers/BaseController';
+import { BaseController } from './BaseController';
 
 class UserController extends BaseController<User> {
   constructor() {

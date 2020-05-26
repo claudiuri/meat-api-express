@@ -1,5 +1,3 @@
-/* eslint-disable func-names */
-/* eslint-disable object-curly-newline */
 import { Schema, model, Document, Model, HookNextFunction } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
@@ -23,7 +21,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,  /* eslint-disable-line */
+    match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     required: true,
   },
   password: {
